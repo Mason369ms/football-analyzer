@@ -1,0 +1,137 @@
+:root {
+  --primary-color: #1d4ed8;
+  --primary-hover: #1e40af;
+  --success-color: #16835f;
+  --warning-color: #d97706;
+  --danger-color: #b42318;
+  --bg-color: #f4f6f8;
+  --panel-bg: #ffffff;
+  --text-color: #172033;
+  --text-muted: #667085;
+  --border-color: #d7dde5;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.page-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--panel-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-success {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.status-warning {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.status-danger {
+  background: #fff4f2;
+  color: #b42318;
+}
+
+.status-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), #3b82f6);
+  border-radius: 12px;
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 40px;
+}
+
+.progress-fill.success {
+  background: linear-gradient(90deg, var(--success-color), #34d399);
+}
+
+/* 响应式断点 */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 8px;
+  }
+
+  .card {
+    padding: 12px;
+    border-radius: 6px;
+  }
+}

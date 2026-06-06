@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SSE Test</title>
+</head>
+<body>
+    <h1>SSE 编码测试</h1>
+    <div id="output"></div>
+    <script>
+        const output = document.getElementById('output');
+        const eventSource = new EventSource('/api/run?action=analyze&match_id=13355337');
+        
+        let count = 0;
+        eventSource.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            if (data.line) {
+                output.innerHTML += `<p>${data.line}</p>`;
+                count++;
+                if (count >= 5) {
+                    eventSource.close();
+                    output.innerHTML += '<p><strong>测试完成</strong></p>';
+                }
+            }
+        };
+        
+        eventSource.onerror = (e) => {
+            output.innerHTML += '<p style="color: red">连接错误</p>';
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>

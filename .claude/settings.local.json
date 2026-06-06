@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3001/api/matches)",
+      "Bash(curl -s http://localhost:8766/api/cache/stats)",
+      "Bash(taskkill /F /PID 36532)",
+      "Bash(sleep 4 && cat /c/Users/ADMINI~1.DES/AppData/Local/Temp/claude/D--football-analyzer/f30d7cdd-f3d1-4a63-844b-34f59569bc89/tasks/bwjt2nz3a.output)",
+      "Bash(pip install *)",
+      "Bash(netstat -ano)",
+      "Bash(cmd //c \"taskkill /F /PID 36532\")",
+      "Bash(curl -s http://localhost:3001/api/cache/stats)",
+      "Bash(cmd //c \"taskkill /F /PID 6192\")",
+      "Bash(curl -s http://localhost:8766/api/matches)",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f\\\\\"共有 {data['count']} 场比赛\\\\\"\\); print\\(f\\\\\"第一场: {data['matches'][0]['home_team']} vs {data['matches'][0]['away_team']} \\(ID: {data['matches'][0]['match_id']}\\)\\\\\"\\)\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f\\\\\"删除后剩余: {data['count']} 场比赛\\\\\"\\)\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f\\\\\"前端代理正常，剩余 {data['count']} 场比赛\\\\\"\\)\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f\\\\\"✅ 前端正常，共 {data['count']} 场比赛\\\\\"\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(cmd //c \"taskkill /F /PID 33092\")",
+      "Bash(curl -s http://localhost:8766/api/match/13711953)",
+      "Bash(curl -s http://localhost:3001/api/match/13711953)",
+      "Bash(curl -s \"http://localhost:8766/api/run?action=analyze&match_id=13355337\" --max-time 5)",
+      "Bash(awk '{print $5}')",
+      "Bash(cmd //c \"taskkill /F /PID 37000\")",
+      "Bash(curl -s http://localhost:8766/health)",
+      "Bash(python -c \"import sys, json; print\\('✅ 后端启动成功' if json.load\\(sys.stdin\\).get\\('status'\\) == 'healthy' else '❌ 后端启动失败'\\)\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f'✅ API 正常，共 {data[\\\\\"count\\\\\"]} 场比赛'\\)\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f'✅ 前端代理正常，共 {data[\\\\\"count\\\\\"]} 场比赛'\\)\")",
+      "Bash(cat)",
+      "Bash(python /tmp/test_sse.py)",
+      "Bash(cmd //c \"taskkill /F /PID 39456\")",
+      "Bash(curl -s \"http://localhost:8766/api/run?action=analyze&match_ids=13711953,13733431,13467769\" --max-time 5)",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f'✅ 后端启动成功'\\)\")",
+      "Bash(curl -s http://localhost:8766/api/analyses)",
+      "Bash(curl -s http://localhost:3001/api/analyses)",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\(f'✅ 前端正常，共 {data[\\\\\"count\\\\\"]} 场比赛'\\)\")",
+      "Bash(git add *)"
+    ]
+  }
+}

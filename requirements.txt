@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+httpx
+requests
+aiohttp
+pydantic
+pydantic-settings
+cachetools
+prometheus-client
+apscheduler
+weasyprint
+pandas
+openpyxl

@@ -1,0 +1,217 @@
+# ============================================================
+# Football Analyzer - 生产环境 Docker Compose 配置
+# ============================================================
+
+version: '3.8'
+
+services:
+  # ============================================================
+  # 主应用服务
+  # ============================================================
+  football-analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: football-analyzer:latest
+    container_name: football-analyzer
+    restart: unless-stopped
+
+    # 端口映射
+    ports:
+      - "${FOOTBALL_PORT:-8766}:8766"
+
+    # 环境变量
+    environment:
+      # 服务器配置
+      FOOTBALL_HOST: "0.0.0.0"
+      FOOTBALL_PORT: "8766"
+      FOOTBALL_DEBUG: "${FOOTBALL_DEBUG:-false}"
+
+      # 管理员配置
+      FOOTBALL_ADMIN_USER: "${FOOTBALL_ADMIN_USER:-admin}"
+      FOOTBALL_ADMIN_PASSWORD: "${FOOTBALL_ADMIN_PASSWORD:-change-this-password}"
+
+      # LLM 配置
+      FOOTBALL_LLM_PROVIDER: "${FOOTBALL_LLM_PROVIDER:-openai}"
+      FOOTBALL_LLM_BASE_URL: "${FOOTBALL_LLM_BASE_URL:-}"
+      FOOTBALL_LLM_MODEL: "${FOOTBALL_LLM_MODEL:-}"
+      FOOTBALL_LLM_API_KEY: "${FOOTBALL_LLM_API_KEY:-}"
+
+      # 日志配置
+      FOOTBALL_LOG_LEVEL: "${FOOTBALL_LOG_LEVEL:-INFO}"
+      FOOTBALL_LOG_JSON_FORMAT: "true"
+      FOOTBALL_LOG_FILE: "/app/logs/football.log"
+
+      # 缓存配置
+      FOOTBALL_CACHE_ENABLED: "true"
+      FOOTBALL_CACHE_ANALYSIS_TTL: "${FOOTBALL_CACHE_ANALYSIS_TTL:-300}"
+      FOOTBALL_CACHE_MATCH_TTL: "${FOOTBALL_CACHE_MATCH_TTL:-600}"
+
+      # 备份配置
+      FOOTBALL_BACKUP_ENABLED: "true"
+      FOOTBALL_BACKUP_INTERVAL_HOURS: "24"
+      FOOTBALL_BACKUP_BACKUP_TIME: "03:00"
+
+      # 监控配置
+      FOOTBALL_MONITOR_ENABLED: "true"
+
+      # Python 配置
+      PYTHONPATH: "/app/src"
+      PYTHONUTF8: "1"
+      TZ: "${TZ:-Asia/Shanghai}"
+
+    # 数据卷
+    volumes:
+      # 数据持久化
+      - ./data:/app/data
+      - ./reports:/app/reports
+      # 日志持久化
+      - ./logs:/app/logs
+      # 备份目录
+      - ./backups:/app/backups
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    # 日志配置
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+        tag: "football-analyzer"
+
+    # 网络
+    networks:
+      - football-network
+
+    # 依赖服务
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  # ============================================================
+  # Redis 缓存服务（可选）
+  # ============================================================
+  redis:
+    image: redis:7-alpine
+    container_name: football-redis
+    restart: unless-stopped
+
+    # 端口映射（仅本地访问）
+    ports:
+      - "127.0.0.1:6379:6379"
+
+    # 命令配置
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1000
+
+    # 数据卷
+    volumes:
+      - redis-data:/data
+
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+    # 日志配置
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+    # 网络
+    networks:
+      - football-network
+
+  # ============================================================
+  # Prometheus 监控（可选）
+  # ============================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: football-prometheus
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:9090:9090"
+
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+
+    networks:
+      - football-network
+
+  # ============================================================
+  # Grafana 可视化（可选）
+  # ============================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: football-grafana
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:3000:3000"
+
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+
+    depends_on:
+      - prometheus
+
+    networks:
+      - football-network
+
+# ============================================================
+# 网络配置
+# ============================================================
+networks:
+  football-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ============================================================
+# 数据卷
+# ============================================================
+volumes:
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local

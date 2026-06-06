@@ -1,0 +1,17 @@
+services:
+  football-analyzer:
+    build: .
+    image: football-analyzer:latest
+    container_name: football-analyzer
+    ports:
+      - "8766:8766"
+    environment:
+      FOOTBALL_ADMIN_USER: ${FOOTBALL_ADMIN_USER:-admin}
+      FOOTBALL_ADMIN_PASSWORD: ${FOOTBALL_ADMIN_PASSWORD:-change-this-password}
+      PYTHONPATH: /app/src
+      PYTHONUTF8: "1"
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+    restart: unless-stopped

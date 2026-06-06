@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表盘改进预览</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+        tr:hover {
+            background: #f3f4f6;
+        }
+        .match-number {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 1.1em;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status-ok {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #2563eb;
+            color: white;
+            border-radius: 3px;
+            font-size: 0.75em;
+            margin-left: 8px;
+        }
+        .success-box {
+            background: #d1fae5;
+            border: 1px solid #34d399;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success-box h4 {
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+        .success-box ul {
+            margin-left: 20px;
+            color: #065f46;
+        }
+        .success-box li {
+            margin-bottom: 5px;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        .improvement-section {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+        .checkmark {
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 仪表盘改进预览</h1>
+
+        <div class="success-box">
+            <h4>✅ 改进已完成！</h4>
+            <ul>
+                <li><strong>问题 1：</strong>赛事列表重复 → ✅ 已解决（改为更新逻辑）</li>
+                <li><strong>问题 2：</strong>缺少序号列 → ✅ 已完成（显示 201, 202 等）</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>📋 赛事列表 <span class="badge">新增序号列</span></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th style="background: #fef3c7; color: #92400e;">序号 ✨</th>
+                        <th>联赛</th>
+                        <th>主队</th>
+                        <th>客队</th>
+                        <th>时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td class="match-number">201</td>
+                        <td>国际友谊</td>
+                        <td>斯洛文尼亚</td>
+                        <td>塞浦路斯</td>
+                        <td>2026-06-05 00:00</td>
+                        <td><span class="status status-ok">有数据</span></td>
+                        <td><a href="#">详情</a> <button>分析</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td class="match-number">202</td>
+                        <td>国际友谊</td>
+                        <td>瑞典</td>
+                        <td>希腊</td>
+                        <td>2026-06-05 01:00</td>
+                        <td><span class="status status-ok">有数据</span></td>
+                        <td><a href="#">详情</a> <button>分析</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td class="match-number">203</td>
+                        <td>国际友谊</td>
+                        <td>西班牙</td>
+                        <td>伊拉克</td>
+                        <td>2026-06-05 02:45</td>
+                        <td><span class="status status-ok">有数据</span></td>
+                        <td><a href="#">详情</a> <button>分析</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td class="match-number">204</td>
+                        <td>国际友谊</td>
+                        <td>法国</td>
+                        <td>科特迪瓦</td>
+                        <td>2026-06-05 02:45</td>
+                        <td><span class="status status-ok">有数据</span></td>
+                        <td><a href="#">详情</a> <button>分析</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td class="match-number">205</td>
+                        <td>国际友谊</td>
+                        <td>墨西哥</td>
+                        <td>塞尔维亚</td>
+                        <td>2026-06-05 08:00</td>
+                        <td><span class="status status-ok">有数据</span></td>
+                        <td><a href="#">详情</a> <button>分析</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>📊 近期分析 <span class="badge">新增序号列 + 无重复</span></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="background: #fef3c7; color: #92400e;">序号 ✨</th>
+                        <th>日期</th>
+                        <th>联赛</th>
+                        <th>对阵</th>
+                        <th>预测</th>
+                        <th>比分</th>
+                        <th>进球</th>
+                        <th>结果</th>
+                        <th>状态</th>
+                        <th>详情</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="match-number">205</td>
+                        <td>2026-06-04</td>
+                        <td>国际友谊</td>
+                        <td>墨西哥 vs 塞尔维亚</td>
+                        <td>主胜</td>
+                        <td>2-0</td>
+                        <td>2</td>
+                        <td>-</td>
+                        <td><span class="status status-pending">待开奖</span></td>
+                        <td><a href="#">查看</a></td>
+                    </tr>
+                    <tr>
+                        <td class="match-number">204</td>
+                        <td>2026-06-04</td>
+                        <td>国际友谊</td>
+                        <td>法国 vs 科特迪瓦</td>
+                        <td>主胜</td>
+                        <td>2-1</td>
+                        <td>3</td>
+                        <td>-</td>
+                        <td><span class="status status-pending">待开奖</span></td>
+                        <td><a href="#">查看</a></td>
+                    </tr>
+                    <tr>
+                        <td class="match-number">203</td>
+                        <td>2026-06-04</td>
+                        <td>国际友谊</td>
+                        <td>西班牙 vs 伊拉克</td>
+                        <td>主胜</td>
+                        <td>2-0</td>
+                        <td>3</td>
+                        <td>-</td>
+                        <td><span class="status status-pending">待开奖</span></td>
+                        <td><a href="#">查看</a></td>
+                    </tr>
+                    <tr>
+                        <td class="match-number">202</td>
+                        <td>2026-06-04</td>
+                        <td>国际友谊</td>
+                        <td>瑞典 vs 希腊</td>
+                        <td>主胜</td>
+                        <td>2-1</td>
+                        <td>3</td>
+                        <td>-</td>
+                        <td><span class="status status-pending">待开奖</span></td>
+                        <td><a href="#">查看</a></td>
+                    </tr>
+                    <tr>
+                        <td class="match-number">201</td>
+                        <td>2026-06-04</td>
+                        <td>国际友谊</td>
+                        <td>斯洛文尼亚 vs 塞浦路斯</td>
+                        <td>主胜</td>
+                        <td>3-1</td>
+                        <td>4</td>
+                        <td>-</td>
+                        <td><span class="status status-pending">待开奖</span></td>
+                        <td><a href="#">查看</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>🔧 改进详情</h3>
+
+            <div class="improvement-section">
+                <h4>问题 1: 赛事列表重复 ✅ 已解决</h4>
+                <p><strong>根本原因：</strong>使用 <code>INSERT</code> 语句导致同一场比赛可插入多条分析记录</p>
+                <p><strong>解决方案：</strong></p>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>修改 <code>record_analysis()</code> 函数为更新逻辑</li>
+                    <li>使用 <code>INNER JOIN</code> 确保"赛事列表有分析才会有"</li>
+                    <li>清理历史重复数据（删除 6 条重复记录）</li>
+                </ul>
+            </div>
+
+            <div class="improvement-section">
+                <h4>问题 2: 新增序号列 ✅ 已完成</h4>
+                <p><strong>数据来源：</strong>竞彩 API 的 <code>lottery_info.round</code> 字段（如 "周四201"）</p>
+                <p><strong>实现方式：</strong></p>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>数据模型添加 <code>round_info</code> 字段</li>
+                    <li>查询时关联 <code>matches.round_info</code></li>
+                    <li>提取数字部分作为序号（201, 202 等）</li>
+                    <li>赛事列表和近期分析都新增序号列</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+<strong>关键代码改动：</strong>
+
+# history_db.py - record_analysis()
+existing = conn.execute(
+    "SELECT id FROM analyses WHERE match_id = ?",
+    (match_id,)
+).fetchone()
+
+if existing:
+    <span class="checkmark"># ✅ 更新现有记录</span>
+    conn.execute("UPDATE analyses SET ... WHERE match_id = ?")
+else:
+    <span class="checkmark"># ✅ 插入新记录</span>
+    conn.execute("INSERT INTO analyses ...")
+
+# dashboard.py - render_dashboard_html()
+match_number = ""
+if m.round_info:
+    import re
+    num_match = re.search(r'(\d+)', m.round_info)
+    <span class="checkmark"># ✅ 提取序号：周四201 → 201</span>
+    match_number = num_match.group(1)
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🚀 如何使用</h3>
+            <div class="code-block">
+# 1. 启动仪表盘
+$env:PYTHONPATH='src'
+python -m football_sim.cli dashboard --server fastapi --port 8766
+
+# 2. 访问仪表盘
+打开浏览器访问: http://127.0.0.1:8766
+
+# 3. 查看改进效果
+- 赛事列表：新增"序号"列，显示 201、202 等
+- 近期分析：新增"序号"列，无重复记录
+- 重新分析：更新记录而非新增
+            </div>
+        </div>
+
+        <div class="success-box">
+            <h4>✨ 改进亮点</h4>
+            <ul>
+                <li>✅ <strong>数据一致性</strong>：赛事列表和分析列表完全一致</li>
+                <li>✅ <strong>清晰的序号</strong>：竞彩序号一目了然（201, 202 等）</li>
+                <li>✅ <strong>智能更新</strong>：重新分析自动更新记录</li>
+                <li>✅ <strong>无重复数据</strong>：同一比赛不会重复出现</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #6b7280; font-size: 0.9em;">
+            <p>📄 完整技术文档：<code>docs/DASHBOARD_IMPROVEMENTS.md</code></p>
+            <p>🧪 测试脚本：<code>scripts/test_dashboard.py</code></p>
+        </div>
+    </div>
+</body>
+</html>
